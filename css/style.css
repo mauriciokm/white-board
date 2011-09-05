@@ -1,0 +1,39 @@
+a.novo_postit{
+	background: url("../imagens/novo_postit.png") no-repeat;
+	text-indent: -999999px;
+	outline: 0 none;
+	display: block;
+	width:16px;
+	height:16px;
+}
+
+div.post-it {
+	width: 150px;
+	height: 150px;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	background-color: #ff6;
+	text-align: center;
+	font-family: cursive;
+	font-size: 12px;
+}
+div.post-it p {
+	width: 144px;
+	height: 144px;
+	margin: 1px;
+	padding:2px;
+	border: 1px solid #fe0;
+}
+div.post-it textarea {
+	width: 150px;
+	height: 150px;
+	margin: 0;
+	border: 1px solid #FF9;
+	background-color: #ffc;
+	font-family: cursive;
+	text-align: center;
+	font-size: 12px;
+}
+div.post-it textarea:focus {
+	border: 1px solid #fe0;
+}

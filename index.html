@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js" type="text/javascript"></script>
+	  	<script src="js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+	  	<script src="js/funcoes.js" type="text/javascript"></script>
+	  	<script>
+		  	jQuery(function() {
+		  		permitirArrastar();
+		  		setupEditarPostit();
+		  		setupConfirmarEdicaoPostit();
+		  	});
+	  	</script>
+	</head>
+	<body>
+		<a class="novo_postit" href="" onclick="return criarPostit();">Novo</a>
+		<div class="white-board">
+		</div>
+	</body>
+</html>
