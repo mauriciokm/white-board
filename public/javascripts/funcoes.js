@@ -1,3 +1,5 @@
+var socket = io.connect('http://localhost:8888');
+
 function permitirArrastar(){
 	jQuery( ".post-it" ).draggable({
 		drag: function() {  }
@@ -22,7 +24,8 @@ function setupConfirmarEdicaoPostit(){
 }
 
 function criarPostit(){
-	jQuery('.white-board').append(jQuery('<div>').addClass('post-it').attr({style: 'position: absolute; left: 5px; top: 25px'}).append('<p>'));
+	var postit = jQuery('.white-board').append(jQuery('<div>').addClass('post-it').attr({style: 'position: absolute; left: 5px; top: 25px'}).append('<p>'));
 	permitirArrastar();
+        socket.emit('new', {data: postit.position()})
 	return false;
 }
