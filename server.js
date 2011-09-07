@@ -26,15 +26,17 @@ app.get('/postit/new', function(req, res){
 });
 
 io.sockets.on('connection', function (socket) {
-  socket.on('new', function (data) {
-    socket.broadcast.emit('create', data);
-  });
-  socket.on('start-drag', function(data){
-    socket.broadcast.emit('start-drag', data);
-  });
-  socket.on('stop-drag', function(data){
-    socket.broadcast.emit('stop-drag', data);
-  });
+  proxyBroadcast('create', socket);
+  proxyBroadcast('start-drag', socket);
+  proxyBroadcast('stop-drag', socket);
+  proxyBroadcast('editing', socket);
+  proxyBroadcast('edited', socket);
 });
+
+function proxyBroadcast(action, socket) {
+  socket.on(action, function(data){
+      socket.broadcast.emit(action, data);
+  });
+}
 
 app.listen(8888, '192.168.1.7')

@@ -40,3 +40,6 @@ div.post-it textarea:focus {
 div.dragging {
   background-color: #E0E05A;
 }
+div.editing {
+  background-color: #FFFFB5;
+}
