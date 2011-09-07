@@ -29,6 +29,12 @@ io.sockets.on('connection', function (socket) {
   socket.on('new', function (data) {
     socket.broadcast.emit('create', data);
   });
+  socket.on('start-drag', function(data){
+    socket.broadcast.emit('start-drag', data);
+  });
+  socket.on('stop-drag', function(data){
+    socket.broadcast.emit('stop-drag', data);
+  });
 });
 
 app.listen(8888, '192.168.1.7')

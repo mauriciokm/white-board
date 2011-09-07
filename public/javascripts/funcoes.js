@@ -1,14 +1,16 @@
 var socket = io.connect('http://192.168.1.7:8888');
 
-function permitirArrastar(){
-	jQuery( ".post-it" ).draggable({
-		drag: function() {  }
-	});
-}
-
-function permitirArrastarId(id) {
-	jQuery( "#"+id ).draggable({
-		drag: function() {  }
+function permitirArrastar(id) {
+  element = jQuery( "#"+id );
+	element.draggable({
+	  start: function(even, ui) {
+            element.addClass('dragging');
+            socket.emit('start-drag', {id: id});
+          },
+          stop: function(even, ui) {
+            element.removeClass('dragging');
+            socket.emit('stop-drag', {id: id, position: element.position()});
+          }
 	});
 }
 
@@ -31,22 +33,16 @@ function setupConfirmarEdicaoPostit(){
 
 function criarPostit(){
   $.get('/postit/new', function(data){
-    postit = novoPostit({top: '25px', left: '5px'}, 'postit-'+data.next_id);
-    jQuery('.white-board').append(postit);
-    permitirArrastar();
+    postit = novoPostit({top: '25px', left: '5px'}, data.next_id);
     socket.emit('new', {position: postit.position(), id: data.next_id});
   });
   return false;
 }
-socket.on('connect', function () {
-  socket.on('create', function(data) {
-    id = 'postit-'+data.id;
-    postit = novoPostit(data.position, id);
-    jQuery('.white-board').append(postit);
-    permitirArrastarId(id);
-  });
-});
-function novoPostit(position, id) {
+
+function novoPostit(position, next_id) {
+    id = 'postit-'+next_id;
     var postit = jQuery('<div>').attr('id', id).addClass('post-it').attr({style: 'position: absolute; left: '+position.left+'; top: '+position.top+';'}).append('<p>');
+    jQuery('.white-board').append(postit);
+    permitirArrastar(id);
     return postit;
 }

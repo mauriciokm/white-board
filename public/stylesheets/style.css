@@ -37,3 +37,6 @@ div.post-it textarea {
 div.post-it textarea:focus {
 	border: 1px solid #fe0;
 }
+div.dragging {
+  background-color: #E0E05A;
+}
