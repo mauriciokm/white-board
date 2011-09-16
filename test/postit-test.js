@@ -33,6 +33,7 @@ test("Cria objeto jQuery com todas os parametros", function(){
 	postit = new Postit({top:10, left:15}, 'herp a derp', '15');
 	postit.create();
 	obj = postit.obj;
+	$("#qunit-fixture").append(obj);
 	equal(obj.attr("id"), postit.id);
 	equal(obj.html(), "<p>herp a derp</p>");
 	ok(obj.hasClass('post-it'));
@@ -58,18 +59,27 @@ test("SetUp drag sem postit criado", function(){
 
 var SocketMock = function() {
 	this.emit = function(evento, options) {
-		console.info(evento);
-		console.info(options);
+          if(evento == "start-drag") {
+            equal(options.id, "15");
+          }
+          else if(evento == "stop-drag") {
+            deepEqual(options.position, {top: 40, left: 45})
+            start();
+          }
 	}
 }
 
 test("Callback de DragStart chamando socket", function(){
 	postit = new Postit({top:10, left:15}, 'herp a derp', '15');
 	postit.create();
-	postit.allowDrag();
+	postit.allowDrag(new SocketMock);
 	el = postit.obj;
 	$("#qunit-fixture").append(el);
-	el.simulate("drag", {dx: 10, dy: 10});
+        stop();
+        expect(2);
+        setTimeout(function(){
+	  el.simulate("drag", {dx: 30, dy: 30});
+        }, 200);
 });
 
 
