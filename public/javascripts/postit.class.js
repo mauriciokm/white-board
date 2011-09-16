@@ -24,6 +24,11 @@ var Postit = function(position, text, id, obj) {
     this.obj = postit;
     return postit;
   };
+
+  this.setId = function(id) {
+    this.id = id;
+    if(obj != undefined) obj.attr("id", id);
+  }
 	
   this.allowDrag = function(socket) {
     if(this.obj == undefined) this.create();

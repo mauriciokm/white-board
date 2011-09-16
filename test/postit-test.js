@@ -27,6 +27,23 @@ test("Extração de hash", function(){
 	deepEqual(hash, {position: {top: 10, left: 15}, text: 'herp a derp', id: '15'});
 });
 
+test("setId com objeto não criado", function(){
+    postit = new Postit();
+    postit.setId("foo");
+    equal(postit.id, "foo");
+    equal(postit.obj, undefined);
+});
+
+test("setId com objeto criado", function(){
+    postit = new Postit;
+    postit.create();
+    console.info(postit.obj);
+    notEqual(postit.obj, undefined);
+    postit.setId("foo");
+    equal(postit.id, "foo");
+    //equal(postit.obj.attr("id"), "foo");
+});
+
 module("Criação de objeto jQuery");
 
 test("Cria objeto jQuery com todas os parametros", function(){

@@ -16,27 +16,16 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res) {
-    fs.readFile(__dirname + '/index.html', 'utf8', function(err, text){
+    fs.readFile(__dirname + '/index_new.html', 'utf8', function(err, text){
         res.send(text);
     });
 });
 
-app.get('/postit/new', function(req, res){
-    res.send({next_id: i++});
-});
-
 io.sockets.on('connection', function (socket) {
-  proxyBroadcast('create', socket);
-  proxyBroadcast('start-drag', socket);
-  proxyBroadcast('stop-drag', socket);
-  proxyBroadcast('editing', socket);
-  proxyBroadcast('edited', socket);
-});
-
-function proxyBroadcast(action, socket) {
-  socket.on(action, function(data){
-      socket.broadcast.emit(action, data);
+  socket.on('new', function(fn) {
+    i = i+1;
+    console.log(i);
+    fn("postit-"+i);
   });
-}
-
+});
 app.listen(8888, '192.168.1.7')
